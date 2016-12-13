@@ -1,0 +1,46 @@
+require 'geocoder/results/base'
+
+module Geocoder::Result
+  class Geonames < Base
+
+    def address(format = :full)
+      _address = @data['address']
+      "#{_address['streetNumber']} #{_address['street']}, #{_address['adminName2']}, #{_address['adminCode1']} #{_address['postalcode']}"
+    end
+
+    def coordinates
+      [@data['address']['lat'], @data['address']['lng']]
+    end
+
+    def latitude
+      @data['address']['lat']
+    end
+
+    def longitude
+      @data['address']['lng']
+    end
+
+    def city
+      @data['address']['adminName2']
+    end
+
+    def state_code
+      @data['address']['adminCode1']
+    end
+
+    def state
+      @data['address']['adminName1']
+    end
+
+    def postal_code
+      @data['address']['postalcode']
+    end
+
+    def country_code
+      @data['address']['countryCode']
+    end
+
+    alias_method :country, :country_code
+
+  end
+end
